@@ -7,8 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "ava tests/**/*.test.js",
-    "tav:test": "ava tests/**/*.test.js"
+    "test": "ava tests/**/*.test.js"
   },
   "repository": {
     "type": "git",
