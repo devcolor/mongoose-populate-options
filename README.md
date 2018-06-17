@@ -13,7 +13,13 @@ npm install mongoose-populate-options --save
 
 ### Usage
 
+#### Typical Case
+
 ```js
+const setPopulateOptions = require('mongoose-populate-options');
+
+MySchema.plugin(setPopulateOptions);
+
 MyModel.find()
   .populate('friends')
   .populate('teachers')
@@ -24,6 +30,9 @@ This will set mognoose options on the two populate calls, as if you'd defined op
 *Note: Just like `setOptions`, order matters. `setPopulateOptions` will affect all populate calls before it, but not after it. Options from `setPopulateOptions` will overwrite options that have alread been set.*
 
 *Note: This method does not set options on the query itself.*
+
+#### Submodule
+You can also load the submodule that will give will take a populate value (e.g. `friends` or `{ path: 'friends', options: { limit: 10 } }` and return an object that has the new options inserted at every level. This may be useful when manually dealing with options, like within an API.
 
 ## Contributing
 
