@@ -1,7 +1,7 @@
 var populateObjForElement = require('./populateObjForElement');
 
 module.exports = function populateOptionsPlugin(schema) {
-  schema.query.setPopulateOptions = function(optionsToSet) {
+  schema.query.setPopulateOptions = function(optionsToSet, allowedOptions) {
     // Population information is stored in _mongooseOptions.populate. Note
     // that this data strucutre is a bit odd looking. The first level of
     // keys are the names of the fields to be populated. After that, the
@@ -20,7 +20,8 @@ module.exports = function populateOptionsPlugin(schema) {
       for (var i = 0; i < keys.length; i++) {
         this._mongooseOptions.populate[keys[i]] = populateObjForElement(
           this._mongooseOptions.populate[keys[i]],
-          optionsToSet
+          optionsToSet,
+          allowedOptions
         );
 
       }

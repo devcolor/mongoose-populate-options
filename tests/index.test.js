@@ -101,3 +101,28 @@ test('Does not affect subsequent population calls', function (t) {
     'setPopulateOptions should affect subsequent populate calls'
   );
 });
+
+test('Only allowed fields shold remain', function (t) {
+  var Org = t.context.Org;
+  var options = { limit: 10 };
+  var query = Org.find()
+    .skip(5)
+    .populate({ path: 'foo', options: { lean: true, skip: 5 } })
+    .setPopulateOptions({ limit: 10 }, ['lean']);
+
+  t.is(
+    query._mongooseOptions.populate.foo.options.skip,
+    undefined,
+    'Pre-existing options that are not allowed should be removed'
+  );
+  t.is(
+    query._mongooseOptions.populate.foo.options.limit,
+    10,
+    'New options should stay'
+  );
+  t.is(
+    query._mongooseOptions.populate.foo.options.lean,
+    true,
+    'Allowed options should still be present'
+  );
+});
