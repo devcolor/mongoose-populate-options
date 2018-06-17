@@ -16,9 +16,39 @@ test('setPopulateOptions should be available on query', function (t) {
   );
 });
 
-test.todo('Do not alter queries that have no populate fields');
-test.todo('Does not affect subsequent population calls');
-test.todo('Does not affect top level query options');
+test('Query helper should return query (chainable)', function (t) {
+  var Org = t.context.Org;
+  var options = { limit: 10 };
+  var query = Org.find().populate('foo');
+  t.is(
+    query.setPopulateOptions(options),
+    query,
+    'setPopulateOptions should return the query'
+  );
+});
+
+test('Do not alter queries that have no populate fields', function (t) {
+  var Org = t.context.Org;
+  var options = { limit: 10 };
+  var query = Org.find().setPopulateOptions(options);
+
+  t.is(
+    query._mongooseOptions.populate,
+    undefined,
+    'Population config should not be established when there was none before'
+  );
+});
+
+test('Does not affect top level query options', function (t) {
+  var Org = t.context.Org;
+  var query = Org.find()
+    .setOptions({ limit:5 }).setPopulateOptions({ limit: 10 });
+
+  t.is(
+    query.options.limit,
+    5
+  );
+});
 
 test('Options should be set', function (t) {
   var Org = t.context.Org;
@@ -46,13 +76,28 @@ test('Options should be set', function (t) {
   );
 });
 
-test('Query helper should return query (chainable)', function (t) {
+test('Does not affect subsequent population calls', function (t) {
   var Org = t.context.Org;
   var options = { limit: 10 };
-  var query = Org.find().populate('foo');
+  var query = Org.find()
+    .skip(5)
+    .populate('foo')
+    .setPopulateOptions(options)
+    .populate('bar');
+
   t.is(
-    query.setPopulateOptions(options),
-    query,
-    'setPopulateOptions should return the query'
+    query._mongooseOptions.populate.foo.path,
+    'foo',
+    'Population config should be expanded into object'
+  );
+  t.deepEqual(
+    query._mongooseOptions.populate.foo.options,
+    options,
+    'Population options should be set'
+  );
+  t.is(
+    query._mongooseOptions.populate.bar.options,
+    undefined,
+    'setPopulateOptions should affect subsequent populate calls'
   );
 });
