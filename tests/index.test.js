@@ -104,7 +104,6 @@ test('Does not affect subsequent population calls', function (t) {
 
 test('Only allowed fields shold remain', function (t) {
   var Org = t.context.Org;
-  var options = { limit: 10 };
   var query = Org.find()
     .skip(5)
     .populate({ path: 'foo', options: { lean: true, skip: 5 } })
