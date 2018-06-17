@@ -1,0 +1,47 @@
+{
+  "name": "mongoose-populate-options",
+  "version": "1.0.0",
+  "description": "A Mongoose plugin for applying query options to every layer of population.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "ava tests/**/*.test.js",
+    "tav:test": "ava tests/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devcolor/mongoose-populate-options.git"
+  },
+  "keywords": [
+    "mongoose",
+    "populate",
+    "options",
+    "schema",
+    "propagate",
+    "query",
+    "mongoose query",
+    "query options",
+    "mongoose query options"
+  ],
+  "author": "Makinde Adeagbo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devcolor/mongoose-populate-options/issues"
+  },
+  "homepage": "https://github.com/devcolor/mongoose-populate-options#readme",
+  "devDependencies": {
+    "ava": "1.0.0-beta.6",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-plugin-import": "2.12.0",
+    "mongoose": "5.1.5"
+  },
+  "peerDependencies": {
+    "mongoose": ">=4.x"
+  },
+  "dependencies": {
+    "lodash.pick": "4.4.0"
+  }
+}
